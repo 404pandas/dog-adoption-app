@@ -38,7 +38,7 @@ This app interacts with the Fetch API at `https://frontend-take-home-service.fet
 
 ## 📌 Project Structure  
 ```
-fetch-dog-adoption-app/
+dog-adoption-app/
 ├── src/
 │   ├── components/        # Reusable UI components  
 │   ├── pages/             # Login, Search, Favorites, Match pages  
@@ -56,7 +56,7 @@ fetch-dog-adoption-app/
 ```
 
 ## 🌍 Deployment  
-This app will be deployed using **Vercel** or **Netlify** for easy access.  
+This app will be deployed using **Netlify** for easy access.  
 
 ## 💜 License  
 This project is open-source under the MIT License.  
