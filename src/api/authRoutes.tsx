@@ -27,3 +27,4 @@
 // Response:
 // - Status: 200 OK
 // - Effect: The `fetch-access-token` cookie will be invalidated.
+export {};

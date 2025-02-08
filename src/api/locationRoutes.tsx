@@ -58,3 +58,4 @@
 //     "results": Location[],  // Array of Location objects
 //     "total": number         // Total number of results (max: 10,000)
 // }
+export {};
