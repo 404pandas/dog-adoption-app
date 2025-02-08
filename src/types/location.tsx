@@ -7,7 +7,6 @@ export interface Location {
   county: string;
 }
 
-// TODO- discuss with Dustin
 export interface Coordinates {
   lat: number;
   lon: number;
