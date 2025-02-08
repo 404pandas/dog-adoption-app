@@ -1,63 +1,60 @@
-// list of locations
-// POST /locations
-// Body Parameters
-// The body of this request should be an array of no more than 100 ZIP codes.
+// ─── LIST OF LOCATIONS ───────────────────────────
+// Endpoint: POST /locations
+// Description: Retrieves location data for a list of ZIP codes.
 
-// Example
+// Body Parameters:
+// - Array of ZIP codes (max: 100)
 
-// API Request Function
-// ...
-// body: string[]
-// ...
-// Return Value
-// Returns an array of Location objects.
-// // -------------
-// // locatin by query
-// POST /locations/search
-// Body Parameters
-// The following body parameters can be supplied to filter the search results. All are optional; if none are provided, the search will match all locations.
+// Example Request Body:
+// [
+//     "12345",
+//     "67890",
+//     "54321"
+// ]
 
-// city - the full or partial name of a city
-// states - an array of two-letter state/territory abbreviations
-// geoBoundingBox - an object defining a geographic bounding box:
-// This object must contain one of the following combinations of properties:
-// top, left, bottom, right
-// bottom_left, top_right
-// bottom_right, top_left
-// Each property should have the following data:
-// lat - latitude
-// lon - longitude
-// Additionally, the following body parameters can be used to configure the search:
+// Response:
+// - Status: 200 OK
+// - Body: Array of Location objects
 
-// size - the number of results to return; defaults to 25 if omitted
-// from - a cursor to be used when paginating results (optional)
-// The maximum total number of ZIP codes that will be matched by a single query is 10,000.
+// ─── LOCATION BY QUERY ───────────────────────────
+// Endpoint: POST /locations/search
+// Description: Searches for locations based on various filters.
 
-// Example
+// Body Parameters (All optional):
+// - city (string) → Full or partial city name
+// - states (string[]) → Array of two-letter state/territory abbreviations
+// - geoBoundingBox (object) → Defines a geographic bounding box
 
-// // API Request Function
-// ...
-// body: {
-//     city?: string,
-//     states?: string[],
-//     geoBoundingBox?: {
-//         top?: Coordinates,
-//         left?: Coordinates,
-//         bottom?: Coordinates,
-//         right?: Coordinates,
-//         bottom_left?: Coordinates,
-//         top_left?: Coordinates
-//     },
-//     size?: number,
-//     from?: number
-// }
-// ...
-// Return Value
-// Returns an object with the following properties:
+// geoBoundingBox Object:
+// Must contain one of the following combinations of properties:
+// 1. `top`, `left`, `bottom`, `right`
+// 2. `bottom_left`, `top_right`
+// 3. `bottom_right`, `top_left`
 
-// results - an array of Location objects
-// total - the total number of results for the query (not just the current page)
+// Each coordinate property should be an object with:
+// - lat (number) → Latitude
+// - lon (number) → Longitude
+
+// Additional Parameters:
+// - size (number) → Number of results to return (default: 25)
+// - from (number) → Cursor for paginating results
+
+// Example Request Body:
 // {
-//     results: Location[],
-//     total: number
+//     "city": "San Francisco",
+//     "states": ["CA", "OR"],
+//     "geoBoundingBox": {
+//         "top": { "lat": 37.8, "lon": -122.5 },
+//         "bottom": { "lat": 37.7, "lon": -122.4 }
+//     },
+//     "size": 50,
+//     "from": 100
+// }
+
+// Response:
+// - Status: 200 OK
+// - Body:
+// {
+//     "results": Location[],  // Array of Location objects
+//     "total": number         // Total number of results (max: 10,000)
 // }

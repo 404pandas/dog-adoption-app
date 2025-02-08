@@ -1,22 +1,29 @@
-// -      login   -
-// POST /auth/login
-// Body Parameters
-// name - the user’s name
-// email - the user’s email
-// Example
+// ─── LOGIN ────────────────────────────────────────
+// Endpoint: POST /auth/login
+// Description: Authenticates a user and returns a session token.
 
-// // API Request Function
-// ...
-// body: {
-//     name: string,
-//     email: string
+// Body Parameters:
+// - name  (string)  → The user’s name
+// - email (string)  → The user’s email
+
+// Example Request Body:
+// {
+//     "name": "John Doe",
+//     "email": "john@example.com"
 // }
-// ...
-// Response
-// 200 OK
 
-// An auth cookie, fetch-access-token, will be included in the response headers. This will expire in 1 hour.
+// Response:
+// - Status: 200 OK
+// - Headers:
+//   - Set-Cookie: fetch-access-token (Expires in 1 hour)
 
-// -      logout   -
-// POST /auth/logout
-// Hit this endpoint to end a user’s session. This will invalidate the auth cookie.
+// ─── LOGOUT ───────────────────────────────────────
+// Endpoint: POST /auth/logout
+// Description: Ends the user session and invalidates the auth cookie.
+
+// Example Request:
+// (No body required)
+
+// Response:
+// - Status: 200 OK
+// - Effect: The `fetch-access-token` cookie will be invalidated.
