@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Outlet } from 'react-router-dom';
+
 
 function App() {
   const [results, setResults] = useState("");
+  // const [dogs, setdogs] = useState([])
 
   useEffect(() => {
     const testLogin = async () => {
@@ -13,7 +16,7 @@ function App() {
             name: 'mary',
             email: 'mary.panda.jackson@gmail.com',
           },
-          { withCredentials: true } // Ensures cookies are sent/received (included in API reference)
+          // { withCredentials: true } 
         );
 
         setResults('Login Successful! 🎉');
@@ -23,8 +26,19 @@ function App() {
         console.error('Login failed', error);
       }
     };
-
+ const testDogs = async () => {
+      try {
+        const response = await axios.get(
+          'https://frontend-take-home-service.fetch.com/dogs/breeds', { withCredentials: true }
+        )
+        console.log(response)
+      } catch (error) {
+    
+        console.error('dogs:', error);
+      }
+    }
     testLogin();
+    testDogs()
   }, []);
 
   return (
@@ -36,6 +50,8 @@ function App() {
         Testing login
       </h2>
       <p>{results}</p>
+      <Outlet />
+
     </>
   );
 }
