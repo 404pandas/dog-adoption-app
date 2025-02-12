@@ -17,6 +17,11 @@ import Search from './pages/Search';
 // Do I need this?
 // import Match from './pages/Match.tsx';
 
+// redux
+import { Provider } from "react-redux";
+import { store } from "./store";
+
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -39,7 +44,10 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <StrictMode>
+        <Provider store={store}>
+
       <RouterProvider router={router} />
+      </Provider>
     </StrictMode>
   );
 }

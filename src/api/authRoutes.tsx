@@ -1,4 +1,10 @@
+// external modules
 import axios from "axios";
+
+// local modules
+import { RootState } from "../store";
+import { store } from "../store";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // ─── LOGIN ────────────────────────────────────────
@@ -22,10 +28,12 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const login = async (name: string, email: string): Promise<string> => {
   try {
+    const { withCredentials } = store.getState().auth; // Get from Redux
+
     const response = await axios.post(
       `${API_BASE_URL}/auth/login`,
       { name, email },
-      { withCredentials: true }
+      { withCredentials }
     );
     console.log("Login successful:", response);
     return `Login Successful! Welcome, ${name}!`;
