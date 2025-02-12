@@ -2,7 +2,6 @@
 import axios from "axios";
 
 // local modules
-import { RootState } from "../store";
 import { store } from "../store";
 import { setWithCredentials } from "../store/authSlice"; // Import action to modify withCredentials
 
