@@ -5,7 +5,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  withCredentials: true, // Default to true for login/logout requests
+  withCredentials: false, // Default to true for login/logout requests
 };
 
 const authSlice = createSlice({

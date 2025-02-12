@@ -1,6 +1,7 @@
 // import { useState, useEffect } from "react";
 // import axios from "axios";
 import { Outlet } from 'react-router-dom';
+import Nav from './components/Nav/Nav';
 
 
 
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+    <Nav/>
       <h1 className='text-3xl font-bold underline bg-gray-800'>
         Is Tailwind.js working?
       </h1>
