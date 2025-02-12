@@ -11,9 +11,9 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Pages
-import Login from './pages/Login.tsx';
-import Error from './pages/Error.tsx';
-import Search from './pages/Search.tsx';
+import Login from './pages/Login';
+import Error from './pages/Error';
+import Search from './pages/Search';
 // Do I need this?
 // import Match from './pages/Match.tsx';
 

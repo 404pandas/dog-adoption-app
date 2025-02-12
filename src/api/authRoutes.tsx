@@ -1,3 +1,6 @@
+import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 // ─── LOGIN ────────────────────────────────────────
 // Endpoint: POST /auth/login
 // Description: Authenticates a user and returns a session token.
@@ -16,6 +19,21 @@
 // - Status: 200 OK
 // - Headers:
 //   - Set-Cookie: fetch-access-token (Expires in 1 hour)
+
+export const login = async (name: string, email: string): Promise<string> => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/auth/login`,
+      { name, email },
+      { withCredentials: true }
+    );
+    console.log("Login successful:", response);
+    return `Login Successful! Welcome, ${name}!`;
+  } catch (error) {
+    console.error("Login failed", error);
+    return "Login Failed. Please contact us!";
+  }
+};
 
 // ─── LOGOUT ───────────────────────────────────────
 // Endpoint: POST /auth/logout
