@@ -64,6 +64,7 @@ export const searchDogs = async ({
         from: from,
         sort: sort,
       },
+      withCredentials: true,
     });
     return response.data; // Return the list of dogs from the response
   } catch (error) {
