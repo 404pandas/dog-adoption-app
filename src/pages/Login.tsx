@@ -33,7 +33,7 @@ const Login = () => {
   return (
     <Container
       maxWidth='sm'
-      className='flex flex-col items-center justify-center min-h-screen'
+      className='flex flex-col items-center justify-center min-h-screen test'
     >
       <Box className='p-8 bg-gray-900 shadow-lg rounded-lg w-full'>
         <Typography variant='h4' className='text-white text-center mb-6'>

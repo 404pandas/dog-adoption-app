@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setSearchQuery } from "../../store/searchSlice"; // Assuming you have a redux slice for search results
+import { searchDogs } from "../../api/dogRoutes";
 import "./searchform.css";
 
 const SearchForm = () => {
@@ -18,11 +19,12 @@ const SearchForm = () => {
   // Local state to manage form values and errors
   const [formValues, setFormValues] = useState({
     breeds: [],
-    zipCodes: "",
-    ageMin: "",
-    ageMax: "",
+    zipCodes: [],
+    ageMin: 0,
+    ageMax: 25,
     size: 25,
     sort: "breed:asc",
+    from: "",
   });
 
   // Handle form value change
@@ -32,18 +34,34 @@ const SearchForm = () => {
       | SelectChangeEvent<string | string[]>
   ) => {
     const { name, value } = e.target;
+
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form values:", formValues);
     dispatch(setSearchQuery(formValues)); // Dispatch search values to Redux
     // Make API call here based on formValues
+    try {
+      const results = await searchDogs({
+        breeds: formValues.breeds,
+        zipCodes: formValues.zipCodes,
+        ageMin: formValues.ageMin,
+        ageMax: formValues.ageMax,
+        size: formValues.size,
+        sort: formValues.sort,
+        from: formValues.from,
+      });
+      console.log("Search Results:", results);
+      // Handle the results (e.g., update the UI or store them in Redux)
+    } catch (error) {
+      console.error("Error during dog search:", error);
+    }
   };
 
   return (
-    <div className='max-w-4xl mx-auto p-6'>
+    <div className='max-w-4xl mx-auto p-6 test'>
       <h1 className='text-2xl mb-4'>Search Dogs</h1>
 
       <form onSubmit={handleSubmit} className='space-y-4'>
@@ -59,13 +77,7 @@ const SearchForm = () => {
             onChange={handleChange}
             renderValue={(selected) => selected.join(", ")}
           >
-            {[
-              "Labrador",
-              "Poodle",
-              "Bulldog",
-              "Beagle",
-              "Golden Retriever",
-            ].map((breed) => (
+            {["MAKE", "THESE", "THE", "API", "CALL"].map((breed) => (
               <MenuItem key={breed} value={breed}>
                 {breed}
               </MenuItem>

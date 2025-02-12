@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 
 // local modules
 import "./index.css";
+import "./App.css"
 import App from "./App.js";
 
 

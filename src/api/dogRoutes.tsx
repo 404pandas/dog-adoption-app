@@ -1,3 +1,6 @@
+import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 // ─── DOG BREED NAMES ─────────────────────────────
 // Endpoint: GET /dogs/breeds
 // Description: Retrieves an array of all possible dog breed names.
@@ -32,6 +35,42 @@
 //       "next": string | null,  // Query for the next page (if available)
 //       "prev": string | null   // Query for the previous page (if available)
 //   }
+
+export const searchDogs = async ({
+  breeds,
+  zipCodes,
+  ageMin,
+  ageMax,
+  size,
+  from,
+  sort,
+}: {
+  breeds: string[]; // Array of breed names
+  zipCodes: string[]; // Array of zip codes
+  ageMin: number; // Minimum age filter
+  ageMax: number; // Maximum age filter
+  size: number; // Number of results to return (default: 25)
+  from: string | null; // Cursor for pagination
+  sort: string; // Sorting format: `sort=field:[asc|desc]`
+}) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/dogs/get`, {
+      params: {
+        breeds: breeds,
+        zipCodes: zipCodes,
+        ageMin: ageMin,
+        ageMax: ageMax,
+        size: size,
+        from: from,
+        sort: sort,
+      },
+    });
+    return response.data; // Return the list of dogs from the response
+  } catch (error) {
+    console.error("Error fetching dogs:", error);
+    throw error;
+  }
+};
 
 // ─── FETCH 100 DOG OBJECTS ───────────────────────
 // Endpoint: POST /dogs
@@ -71,4 +110,3 @@
 //   {
 //       "match": "selectedDogId"  // The matched dog's ID
 //   }
-export {};
