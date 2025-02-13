@@ -3,9 +3,15 @@ import axios from "axios";
 
 // local modules
 import { store } from "../store";
-import { setWithCredentials } from "../store/authSlice"; // Import action to modify withCredentials
+import { setReduxCredentials } from "../store/authSlice";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// attempt to globally set credentials?
+// const api = axios.create({
+//   baseURL: API_BASE_URL,
+//   withCredentials: true, // Automatically applies to all requests
+// });
 
 // ─── LOGIN ────────────────────────────────────────
 // Endpoint: POST /auth/login
@@ -28,15 +34,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const login = async (name: string, email: string): Promise<string> => {
   try {
-    const { withCredentials } = store.getState().auth; // Get from Redux
-
     const response = await axios.post(
       `${API_BASE_URL}/auth/login`,
       { name, email },
-      { withCredentials }
+      { withCredentials: true }
     );
     console.log("Login successful:", response);
-    store.dispatch(setWithCredentials(true));
+    store.dispatch(setReduxCredentials(true));
 
     return `Login Successful! Welcome, ${name}!`;
   } catch (error) {
@@ -57,11 +61,13 @@ export const login = async (name: string, email: string): Promise<string> => {
 // - Effect: The `fetch-access-token` cookie will be invalidated.
 export const logout = async (): Promise<string> => {
   try {
-    const { withCredentials } = store.getState().auth; // Get from Redux
-
-    await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials });
+    await axios.post(
+      `${API_BASE_URL}/auth/logout`,
+      {},
+      { withCredentials: true }
+    );
     console.log("Logout successful");
-    store.dispatch(setWithCredentials(false));
+    store.dispatch(setReduxCredentials(false));
 
     return "Logged out successfully!";
   } catch (error) {

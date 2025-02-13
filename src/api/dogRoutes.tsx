@@ -45,27 +45,35 @@ export const searchDogs = async ({
   from,
   sort,
 }: {
-  breeds: string[]; // Array of breed names
-  zipCodes: string[]; // Array of zip codes
-  ageMin: number; // Minimum age filter
-  ageMax: number; // Maximum age filter
-  size: number; // Number of results to return (default: 25)
-  from: string | null; // Cursor for pagination
-  sort: string; // Sorting format: `sort=field:[asc|desc]`
+  breeds?: string[];
+  zipCodes?: string[];
+  ageMin?: number;
+  ageMax?: number;
+  size?: number;
+  from?: string;
+  sort?: string;
 }) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/dogs/get`, {
+    let formattedSort = undefined;
+    if (sort) {
+      const [field, direction] = sort.split(":");
+      formattedSort = `${field}:[${direction}]`; // Format it as "field:[asc]" or "field:[desc]"
+    }
+
+    const response = await axios.get(`${API_BASE_URL}/dogs/search`, {
       params: {
-        breeds: breeds,
-        zipCodes: zipCodes,
+        breeds: breeds?.join(","),
+        zipCodes: zipCodes?.join(","),
         ageMin: ageMin,
         ageMax: ageMax,
         size: size,
         from: from,
-        sort: sort,
+        sort: formattedSort,
       },
+
       withCredentials: true,
     });
+    console.log(response);
     return response.data; // Return the list of dogs from the response
   } catch (error) {
     console.error("Error fetching dogs:", error);

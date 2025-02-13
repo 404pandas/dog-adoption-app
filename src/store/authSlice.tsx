@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
-  withCredentials: boolean;
+  reduxCredentials: boolean;
 }
 
 const initialState: AuthState = {
-  withCredentials: false, // Default to true for login/logout requests
+  reduxCredentials: false, // Default to true for login/logout requests
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setWithCredentials: (state, action: PayloadAction<boolean>) => {
-      state.withCredentials = action.payload;
+    setReduxCredentials: (state, action: PayloadAction<boolean>) => {
+      state.reduxCredentials = action.payload;
     },
   },
 });
 
-export const { setWithCredentials } = authSlice.actions;
+export const { setReduxCredentials } = authSlice.actions;
 export default authSlice.reducer;

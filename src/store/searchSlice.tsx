@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // Define the types for the search query and results
 interface SearchQuery {
   breeds?: string[];
-  zipCodes?: string[];
-  ageMin?: number;
-  ageMax?: number;
+  zipCodes?: string[] | undefined;
+  ageMin?: number | null;
+  ageMax?: number | null;
   size?: number;
-  sort?: string;
+  sort?: string | null;
 }
 
 interface SearchState {
@@ -24,10 +24,10 @@ interface SearchState {
 
 const initialState: SearchState = {
   query: {
-    breeds: [],
-    zipCodes: [],
-    ageMin: 0,
-    ageMax: 25,
+    breeds: ["labrador"],
+    zipCodes: undefined,
+    ageMin: undefined,
+    ageMax: undefined,
     size: 25,
     sort: "breed:asc",
   },

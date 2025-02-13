@@ -8,23 +8,28 @@ import {
   FormControl,
   SelectChangeEvent,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { setSearchQuery } from "../../store/searchSlice"; // Assuming you have a redux slice for search results
 import { searchDogs } from "../../api/dogRoutes";
 import "./searchform.css";
 
+// redux
+
+import { RootState } from "../../store"; // Import RootState type
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchQuery } from "../../store/searchSlice"; // Assuming you have a redux slice for search results
+
 const SearchForm = () => {
   const dispatch = useDispatch();
+  const searchQuery = useSelector((state: RootState) => state.search.query); // Get search query from Redux
 
-  // Local state to manage form values and errors
+  // Local state for form values
   const [formValues, setFormValues] = useState({
-    breeds: [],
-    zipCodes: [],
-    ageMin: 0,
-    ageMax: 25,
-    size: 25,
-    sort: "breed:asc",
-    from: "",
+    breeds: searchQuery.breeds || undefined,
+    zipCodes: searchQuery.zipCodes || undefined,
+    ageMin: searchQuery.ageMin ?? undefined,
+    ageMax: searchQuery.ageMax ?? undefined,
+    size: searchQuery.size ?? 25,
+    sort: searchQuery.sort,
+    from: undefined,
   });
 
   // Handle form value change
@@ -50,7 +55,7 @@ const SearchForm = () => {
         ageMin: formValues.ageMin,
         ageMax: formValues.ageMax,
         size: formValues.size,
-        sort: formValues.sort,
+        sort: formValues.sort || "breed:asc",
         from: formValues.from,
       });
       console.log("Search Results:", results);
@@ -135,7 +140,7 @@ const SearchForm = () => {
             <Select
               labelId='sort-label'
               name='sort'
-              value={formValues.sort}
+              value={formValues.sort || "breed:asc"}
               onChange={handleChange}
             >
               <MenuItem value='breed:asc'>Breed (Ascending)</MenuItem>
