@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   TextField,
@@ -8,7 +8,7 @@ import {
   FormControl,
   SelectChangeEvent,
 } from "@mui/material";
-import { searchDogs } from "../../api/dogRoutes";
+import { searchDogs, getBreeds } from "../../api/dogRoutes";
 import "./searchform.css";
 
 // redux
@@ -31,6 +31,28 @@ const SearchForm = () => {
     sort: searchQuery.sort,
     from: undefined,
   });
+
+  // State for dog breeds
+  const [breeds, setBreeds] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch breeds when component mounts
+  useEffect(() => {
+    const fetchBreeds = async () => {
+      setLoading(true);
+      try {
+        const breedData = await getBreeds(); // Fetch breeds from the API
+        setBreeds(breedData); // Set the breeds in the state
+      } catch (error) {
+        setError("Failed to load breeds:" + error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBreeds();
+  }, []);
 
   // Handle form value change
   const handleChange = (
@@ -82,11 +104,17 @@ const SearchForm = () => {
             onChange={handleChange}
             renderValue={(selected) => selected.join(", ")}
           >
-            {["MAKE", "THESE", "THE", "API", "CALL"].map((breed) => (
-              <MenuItem key={breed} value={breed}>
-                {breed}
-              </MenuItem>
-            ))}
+            {loading ? (
+              <MenuItem disabled>Loading breeds...</MenuItem>
+            ) : error ? (
+              <MenuItem disabled>{error}</MenuItem>
+            ) : (
+              breeds.map((breed) => (
+                <MenuItem key={breed} value={breed}>
+                  {breed}
+                </MenuItem>
+              ))
+            )}
           </Select>
         </div>
 

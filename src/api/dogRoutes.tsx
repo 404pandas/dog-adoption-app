@@ -9,6 +9,23 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // - Status: 200 OK
 // - Body: Array of breed names
 
+export const getBreeds = async (): Promise<string[]> => {
+  try {
+    const response = await axios.get(
+      "https://frontend-take-home-service.fetch.com/dogs/breeds",
+      {
+        withCredentials: true, // Ensures cookies are included in requests
+      }
+    );
+
+    // Return the list of breeds
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching dog breeds:", error);
+    throw new Error("Failed to fetch dog breeds");
+  }
+};
+
 // ─── DOGS BY QUERY ───────────────────────────────
 // Endpoint: GET /dogs/search
 // Description: Searches for dogs based on various query parameters.
@@ -54,11 +71,11 @@ export const searchDogs = async ({
   sort?: string;
 }) => {
   try {
-    let formattedSort = undefined;
-    if (sort) {
-      const [field, direction] = sort.split(":");
-      formattedSort = `${field}:[${direction}]`; // Format it as "field:[asc]" or "field:[desc]"
-    }
+    // let formattedSort = undefined;
+    // if (sort) {
+    //   const [field, direction] = sort.split(":");
+    //   formattedSort = `${field}:[${direction}]`; // Format it as "field:[asc]" or "field:[desc]"
+    // }
 
     const response = await axios.get(`${API_BASE_URL}/dogs/search`, {
       params: {
@@ -68,7 +85,7 @@ export const searchDogs = async ({
         ageMax: ageMax,
         size: size,
         from: from,
-        sort: formattedSort,
+        sort: sort,
       },
 
       withCredentials: true,

@@ -24,7 +24,7 @@ interface SearchState {
 
 const initialState: SearchState = {
   query: {
-    breeds: ["labrador"],
+    breeds: [],
     zipCodes: undefined,
     ageMin: undefined,
     ageMax: undefined,
