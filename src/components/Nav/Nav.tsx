@@ -3,6 +3,7 @@ import { logout } from "../../api/authRoutes"; // Modularized logout function
 import { Button } from "@mui/material"; // Material-UI Button
 import { RootState } from "../../store"; // Import RootState to use the selector
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import HomeIcon from "@mui/icons-material/Home";
 
 const Nav = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -22,8 +23,16 @@ const Nav = () => {
     navigate("/login");
   };
 
+  const handleHomeClick = () => {
+    navigate("/"); // Navigate to /search when HomeIcon button is clicked
+  };
+
   return (
     <div className='nav'>
+      <Button variant='contained' color='primary' onClick={handleHomeClick}>
+        <HomeIcon />
+      </Button>
+
       <Button
         onClick={reduxCredentials ? handleLogout : handleLogin} // Conditional function for click
         variant='contained'

@@ -71,16 +71,19 @@ export const searchDogs = async ({
   sort?: string;
 }) => {
   try {
-    // let formattedSort = undefined;
-    // if (sort) {
-    //   const [field, direction] = sort.split(":");
-    //   formattedSort = `${field}:[${direction}]`; // Format it as "field:[asc]" or "field:[desc]"
-    // }
+    // Correct:
+    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji&breeds=Beagle&size=25&sort=breed:asc&from=25
+
+    // Incorrect:
+    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji,Beagle&size=25&sort=breed:asc&from=25
+    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%2CBeagle&size=25&sort=breed:asc&from=25
+    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%26Beagle&size=25&sort=breed:asc&from=25
+    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%2CBeagle%2CBulldog&size=25&sort=breed:asc&from=25
 
     const response = await axios.get(`${API_BASE_URL}/dogs/search`, {
       params: {
-        breeds: breeds?.join(","),
-        zipCodes: zipCodes?.join(","),
+        breeds: breeds,
+        zipCodes: zipCodes,
         ageMin: ageMin,
         ageMax: ageMax,
         size: size,
