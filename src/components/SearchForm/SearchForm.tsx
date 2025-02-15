@@ -115,7 +115,6 @@ const SearchForm = () => {
     dispatch(setError(""));
     dispatch(setDogSearchResults([]));
     e.preventDefault();
-    console.log("Form values:", formValues);
     dispatch(setSearchQuery(formValues)); // Dispatch search values to Redux
     // Make API call here based on formValues
     try {

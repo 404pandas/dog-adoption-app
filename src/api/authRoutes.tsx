@@ -34,12 +34,11 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const login = async (name: string, email: string): Promise<string> => {
   try {
-    const response = await axios.post(
+    await axios.post(
       `${API_BASE_URL}/auth/login`,
       { name, email },
       { withCredentials: true }
     );
-    console.log("Login successful:", response);
     store.dispatch(setReduxCredentials(true));
 
     return `Login Successful! Welcome, ${name}!`;

@@ -93,7 +93,6 @@ export const searchDogs = async ({
 
       withCredentials: true,
     });
-    console.log(response);
     return response.data; // Return the list of dogs from the response
   } catch (error) {
     console.error("Error fetching dogs:", error);
