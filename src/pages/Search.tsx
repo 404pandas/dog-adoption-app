@@ -7,12 +7,14 @@ import { RootState } from "../store"; // Import RootState type
 import DogCard from "../components/DogCard/DogCard";
 import { Dog } from "../types/dog";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
+import FavoritesDrawer from "../components/FavoritesDrawer/FavoritesDrawer";
 
 const Search = () => {
   const dogs = useSelector((state: RootState) => state.search.dogs);
 
   return (
     <div>
+      <FavoritesDrawer />
       <SearchForm />
       <ErrorMessage />
       Results

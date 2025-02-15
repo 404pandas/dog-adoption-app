@@ -1,0 +1,67 @@
+.favorites-container {
+  position: fixed;
+  bottom: 4rem;
+  left: 1rem;
+}
+
+.favorite-button {
+  background-color: #3b82f6; /* Blue background */
+  color: white;
+  padding: 1rem;
+  border-radius: 9999px; /* Circle button */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.favorite-button:hover {
+  background-color: #2563eb; /* Darker blue on hover */
+}
+
+.favorites-drawer {
+  position: fixed;
+  bottom: 7.5rem;
+  left: 1rem;
+  width: 100%; /* Same width as the button */
+  max-width: 16rem; /* Set a max width for the drawer */
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  transform: translateY(100%); /* Start off-screen */
+  opacity: 0; /* Start off invisible */
+  visibility: hidden; /* Hidden by default */
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out,
+    visibility 0.3s ease-out;
+  z-index: -3 !important;
+}
+
+.favorites-drawer.slide-up {
+  transform: translateX(0); /* Move drawer into view */
+  opacity: 1; /* Fade in */
+  visibility: visible; /* Make it visible */
+}
+
+.favorites-drawer.slide-down {
+  transform: translateX(-100%); /* Move drawer off-screen */
+  opacity: 0; /* Fade out */
+  visibility: hidden; /* Hide it */
+}
+
+.favorites-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.favorites-list {
+  max-height: 300px;
+  overflow-y: auto; /* Make the list scrollable if it's too long */
+  padding-right: 0.5rem;
+}
+
+.favorite-item {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
