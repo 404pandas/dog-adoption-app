@@ -112,6 +112,8 @@ const SearchForm = () => {
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
+    dispatch(setError(""));
+    dispatch(setDogSearchResults([]));
     e.preventDefault();
     console.log("Form values:", formValues);
     dispatch(setSearchQuery(formValues)); // Dispatch search values to Redux
