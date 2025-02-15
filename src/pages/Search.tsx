@@ -13,7 +13,6 @@ const Search = () => {
 
   return (
     <div>
-      Search
       <SearchForm />
       <ErrorMessage />
       Results
