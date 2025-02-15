@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store"; // Import RootState type
 import DogCard from "../components/DogCard/DogCard";
 import { Dog } from "../types/dog";
+import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 
 const Search = () => {
   const dogs = useSelector((state: RootState) => state.search.dogs);
@@ -14,6 +15,7 @@ const Search = () => {
     <div>
       Search
       <SearchForm />
+      <ErrorMessage />
       Results
       {dogs.map((dog: Dog) => {
         return <DogCard key={dog.id} dog={dog} />;

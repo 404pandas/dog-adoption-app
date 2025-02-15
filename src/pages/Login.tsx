@@ -6,16 +6,15 @@ import {
   TextField,
   Button,
   FormControl,
-  FormHelperText,
 } from "@mui/material";
 import { login } from "../api/authRoutes"; // Adjust import path as needed
+import { store } from "../store";
+import { setLoading, setError } from "../store/searchSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [error, setError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -26,8 +25,16 @@ const Login = () => {
     }
 
     setError("");
-    const message = await login(name, email); // Call API
-    setStatusMessage(message);
+    try {
+      const message = await login(name, email); // Call API
+      setStatusMessage(message);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      store.dispatch(setError(errorMessage)); // Dispatching the error message as string
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,7 +64,7 @@ const Login = () => {
           </FormControl>
 
           {/* Email Field */}
-          <FormControl fullWidth error={!!error}>
+          <FormControl fullWidth>
             <TextField
               label='Email'
               variant='outlined'
@@ -71,7 +78,6 @@ const Login = () => {
                   "hover:shadow-lg focus:shadow-lg transition-shadow duration-300",
               }}
             />
-            {error && <FormHelperText>{error}</FormHelperText>}
           </FormControl>
 
           {/* Status Message */}

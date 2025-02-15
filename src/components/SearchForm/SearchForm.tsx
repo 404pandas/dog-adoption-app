@@ -12,6 +12,7 @@ import { searchDogs, getBreeds, fetchDogsByIds } from "../../api/dogRoutes";
 import "./searchform.css";
 import { Dog } from "../../types/dog";
 // redux
+import { store } from "../../store";
 
 import { RootState } from "../../store"; // Import RootState type
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +20,7 @@ import {
   setSearchQuery,
   setSearchResults,
   setDogSearchResults,
+  setError,
 } from "../../store/searchSlice"; // Assuming you have a redux slice for search results
 
 const SearchForm = () => {
@@ -38,7 +40,6 @@ const SearchForm = () => {
   // State for dog breeds
   const [breeds, setBreeds] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
   const [zipInput, setZipInput] = useState("");
 
   // Fetch breeds when component mounts
@@ -48,8 +49,10 @@ const SearchForm = () => {
       try {
         const breedData = await getBreeds(); // Fetch breeds from the API
         setBreeds(breedData); // Set the breeds in the state
-      } catch (error) {
-        setError("Failed to load breeds:" + error);
+      } catch (error: unknown) {
+        const errorMessage =
+          error instanceof Error ? error.message : "An unknown error occurred";
+        store.dispatch(setError(errorMessage)); // Dispatching the error message as string
       } finally {
         setLoading(false);
       }
@@ -62,9 +65,11 @@ const SearchForm = () => {
     setLoading(true);
     try {
       const dogData: Dog[] = await fetchDogsByIds(breeds);
-      dispatch(setDogSearchResults(dogData));
-    } catch (error) {
-      console.error("Error fetching dogs:", error);
+      store.dispatch(setDogSearchResults(dogData));
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      store.dispatch(setError(errorMessage)); // Dispatching the error message as string
     } finally {
       setLoading(false);
     }
@@ -112,6 +117,7 @@ const SearchForm = () => {
     dispatch(setSearchQuery(formValues)); // Dispatch search values to Redux
     // Make API call here based on formValues
     try {
+      setLoading(true);
       const results = await searchDogs({
         breeds: formValues.breeds,
         zipCodes: formValues.zipCodes,
@@ -125,8 +131,12 @@ const SearchForm = () => {
 
       // Handle the results (e.g., update the UI or store them in Redux)
       fetchDogs(results.resultIds);
-    } catch (error) {
-      console.error("Error during dog search:", error);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      store.dispatch(setError(errorMessage)); // Dispatching the error message as string
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -149,8 +159,6 @@ const SearchForm = () => {
           >
             {loading ? (
               <MenuItem disabled>Loading breeds...</MenuItem>
-            ) : error ? (
-              <MenuItem disabled>{error}</MenuItem>
             ) : (
               breeds.map((breed) => (
                 <MenuItem key={breed} value={breed}>

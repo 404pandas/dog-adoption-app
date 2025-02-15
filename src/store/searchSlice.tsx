@@ -19,7 +19,7 @@ interface SearchState {
     prev: string | null;
   } | null;
   isLoading: boolean;
-  error: string | null;
+  error: unknown;
   dogs: DogResults[];
 }
 
@@ -64,7 +64,7 @@ const searchSlice = createSlice({
       state.isLoading = action.payload;
     },
     // Set error message
-    setError(state, action: PayloadAction<string | null>) {
+    setError(state, action: PayloadAction<string>) {
       state.error = action.payload;
     },
     // Set dog results
