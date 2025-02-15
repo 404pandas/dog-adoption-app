@@ -119,6 +119,26 @@ export const searchDogs = async ({
 // - Status: 200 OK
 // - Body: Array of dog objects
 
+export const fetchDogsByIds = async (dogIds: string[]): Promise<any[]> => {
+  try {
+    if (!dogIds.length) {
+      throw new Error("No dog IDs provided");
+    }
+
+    const response = await axios.post(`${API_BASE_URL}/dogs`, dogIds, {
+      withCredentials: true, // Ensures cookies are included in requests
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data; // Returns the array of dog objects
+  } catch (error) {
+    console.error("Error fetching dogs by IDs:", error);
+    throw new Error("Failed to fetch dog details");
+  }
+};
+
 // ─── MATCH A DOG ────────────────────────────────
 // Endpoint: POST /dogs/match
 // Description: Selects a single dog ID from a provided list of dog IDs for adoption matching.

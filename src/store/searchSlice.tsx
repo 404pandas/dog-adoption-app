@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // Define the types for the search query and results
 interface SearchQuery {
   breeds?: string[];
-  zipCodes?: string[] | undefined;
+  zipCodes?: string[];
   ageMin?: number | null;
   ageMax?: number | null;
   size?: number;
@@ -20,12 +20,22 @@ interface SearchState {
   } | null;
   isLoading: boolean;
   error: string | null;
+  dogs: DogResults[];
+}
+
+interface DogResults {
+  img: string;
+  name: string;
+  age: number;
+  breed: string;
+  zip_code: string;
+  id: string;
 }
 
 const initialState: SearchState = {
   query: {
     breeds: [],
-    zipCodes: undefined,
+    zipCodes: [],
     ageMin: undefined,
     ageMax: undefined,
     size: 25,
@@ -34,6 +44,7 @@ const initialState: SearchState = {
   results: null,
   isLoading: false,
   error: null,
+  dogs: [],
 };
 
 const searchSlice = createSlice({
@@ -56,10 +67,19 @@ const searchSlice = createSlice({
     setError(state, action: PayloadAction<string | null>) {
       state.error = action.payload;
     },
+    // Set dog results
+    setDogSearchResults(state, action: PayloadAction<DogResults[]>) {
+      state.dogs = action.payload;
+    },
   },
 });
 
-export const { setSearchQuery, setSearchResults, setLoading, setError } =
-  searchSlice.actions;
+export const {
+  setSearchQuery,
+  setSearchResults,
+  setLoading,
+  setError,
+  setDogSearchResults,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -8,23 +8,26 @@ import {
   FormControl,
   SelectChangeEvent,
 } from "@mui/material";
-import { searchDogs, getBreeds } from "../../api/dogRoutes";
+import { searchDogs, getBreeds, fetchDogsByIds } from "../../api/dogRoutes";
 import "./searchform.css";
-
+import { Dog } from "../../types/dog";
 // redux
 
 import { RootState } from "../../store"; // Import RootState type
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuery } from "../../store/searchSlice"; // Assuming you have a redux slice for search results
+import {
+  setSearchQuery,
+  setSearchResults,
+  setDogSearchResults,
+} from "../../store/searchSlice"; // Assuming you have a redux slice for search results
 
 const SearchForm = () => {
   const dispatch = useDispatch();
   const searchQuery = useSelector((state: RootState) => state.search.query); // Get search query from Redux
-
   // Local state for form values
   const [formValues, setFormValues] = useState({
-    breeds: searchQuery.breeds || undefined,
-    zipCodes: searchQuery.zipCodes || undefined,
+    breeds: searchQuery.breeds || [],
+    zipCodes: searchQuery.zipCodes || [],
     ageMin: searchQuery.ageMin ?? undefined,
     ageMax: searchQuery.ageMax ?? undefined,
     size: searchQuery.size ?? 25,
@@ -36,6 +39,7 @@ const SearchForm = () => {
   const [breeds, setBreeds] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [zipInput, setZipInput] = useState("");
 
   // Fetch breeds when component mounts
   useEffect(() => {
@@ -54,6 +58,18 @@ const SearchForm = () => {
     fetchBreeds();
   }, []);
 
+  const fetchDogs = async (breeds: string[]) => {
+    setLoading(true);
+    try {
+      const dogData: Dog[] = await fetchDogsByIds(breeds);
+      dispatch(setDogSearchResults(dogData));
+    } catch (error) {
+      console.error("Error fetching dogs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Handle form value change
   const handleChange = (
     e:
@@ -64,6 +80,31 @@ const SearchForm = () => {
 
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
+
+  // Handle zip code input change
+  const handleZipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setZipInput(e.target.value);
+  };
+
+  // Add a zip code to the list
+  const handleAddZipCode = () => {
+    if (zipInput.trim() !== "" && !formValues.zipCodes.includes(zipInput)) {
+      setFormValues((prev) => ({
+        ...prev,
+        zipCodes: [...prev.zipCodes, zipInput.trim()],
+      }));
+      setZipInput(""); // Clear input after adding
+    }
+  };
+
+  // Remove a zip code from the list
+  const handleRemoveZipCode = (zip: string) => {
+    setFormValues((prev) => ({
+      ...prev,
+      zipCodes: prev.zipCodes.filter((z) => z !== zip),
+    }));
+  };
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,8 +121,10 @@ const SearchForm = () => {
         sort: formValues.sort || "breed:asc",
         from: formValues.from,
       });
-      console.log("Search Results:", results);
+      dispatch(setSearchResults(results));
+
       // Handle the results (e.g., update the UI or store them in Redux)
+      fetchDogs(results.resultIds);
     } catch (error) {
       console.error("Error during dog search:", error);
     }
@@ -119,14 +162,47 @@ const SearchForm = () => {
         </div>
 
         {/* Zip Code */}
+        {/* Zip Code Input & List */}
         <div>
           <TextField
             label='Zip Code'
-            name='zipCodes'
-            value={formValues.zipCodes}
-            onChange={handleChange}
+            name='zipInput'
+            value={zipInput}
+            onChange={handleZipChange}
             fullWidth
           />
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={handleAddZipCode}
+            className='mt-2'
+            disabled={!zipInput.trim()}
+          >
+            Add Zip Code
+          </Button>
+
+          {/* Display added zip codes */}
+          <div className='mt-4'>
+            {formValues.zipCodes.length > 0 ? (
+              formValues.zipCodes.map((zip) => (
+                <div
+                  key={zip}
+                  className='flex justify-between items-center mt-2 border p-2 rounded'
+                >
+                  <span>{zip}</span>
+                  <Button
+                    variant='outlined'
+                    color='error'
+                    onClick={() => handleRemoveZipCode(zip)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              ))
+            ) : (
+              <p>No zip codes added yet.</p>
+            )}
+          </div>
         </div>
 
         {/* Age */}
