@@ -10,7 +10,7 @@ import {
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { addFavorite, removeFavorite } from "../../store/matchSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, store } from "../../store";
+import { RootState } from "../../store";
 
 type DogCardProps = {
   dog: {
@@ -27,20 +27,13 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
   const dispatch = useDispatch();
 
   const favorites = useSelector((state: RootState) => state.match.favorites);
-  const isFavorite = favorites.includes(dog.id);
+  const isFavorite = favorites.some((fav) => fav.id === dog.id);
 
-  const handleFavoriteClick = (id: string) => {
-    console.log("Updated Favorites:", store.getState().match.favorites); // Now should show the latest state
-    const alreadyThere = favorites.includes(id);
-
-    if (!alreadyThere) {
-      // Add to favorites
-      dispatch(addFavorite(id));
-      console.log(favorites);
+  const handleFavoriteClick = () => {
+    if (!isFavorite) {
+      dispatch(addFavorite({ id: dog.id, name: dog.name })); // Dispatch object
     } else {
-      // Remove from favorites
-      dispatch(removeFavorite(id));
-      console.log(favorites);
+      dispatch(removeFavorite(dog.id)); // Only need id to remove
     }
   };
 
@@ -62,7 +55,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
         </Typography>
       </CardContent>
       <IconButton
-        onClick={() => handleFavoriteClick(dog.id)}
+        onClick={handleFavoriteClick}
         color={isFavorite ? "secondary" : "default"}
         sx={{
           position: "absolute",

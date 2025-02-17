@@ -10,3 +10,8 @@ export interface Dog {
 export interface Match {
   match: string;
 }
+
+export interface FavoriteDog {
+  id: string;
+  name: string;
+}

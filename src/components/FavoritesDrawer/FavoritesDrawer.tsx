@@ -29,9 +29,9 @@ const FavoritesDrawer = () => {
         <h2 className='favorites-title'>Your Favorites</h2>
         <ul className='favorites-list'>
           {favorites.length > 0 ? (
-            favorites.map((dog, index) => (
-              <li key={index} className='favorite-item'>
-                {dog}
+            favorites.map((dog) => (
+              <li key={dog.id} className='favorite-item'>
+                {dog.name}
               </li>
             ))
           ) : (

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FavoriteDog } from "../types/dog";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // ─── DOG BREED NAMES ─────────────────────────────
@@ -118,7 +119,9 @@ export const searchDogs = async ({
 // - Status: 200 OK
 // - Body: Array of dog objects
 
-export const fetchDogsByIds = async (dogIds: string[]): Promise<any[]> => {
+export const fetchDogsByIds = async (
+  dogIds: string[]
+): Promise<FavoriteDog[]> => {
   try {
     if (!dogIds.length) {
       throw new Error("No dog IDs provided");
