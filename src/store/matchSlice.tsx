@@ -19,14 +19,14 @@ const matchSlice = createSlice({
       state.match = action.payload;
     },
     // Add dog to favorites
-    addFavorite(state, action: PayloadAction<string>) {
+    addFavorite: (state, action: PayloadAction<string>) => {
       if (!state.favorites.includes(action.payload)) {
-        state.favorites.push(action.payload); // Add dog id to favorites if not already present
+        state.favorites = [...state.favorites, action.payload]; // Immutable update
       }
     },
     // Remove dog from favorites
-    removeFavorite(state, action: PayloadAction<string>) {
-      state.favorites = state.favorites.filter((id) => id !== action.payload); // Remove dog id from favorites
+    removeFavorite: (state, action: PayloadAction<string>) => {
+      state.favorites = state.favorites.filter((id) => id !== action.payload); // Immutable update
     },
   },
 });

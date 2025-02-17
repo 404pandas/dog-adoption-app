@@ -30,6 +30,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
   const isFavorite = favorites.includes(dog.id);
 
   const handleFavoriteClick = (id: string) => {
+    console.log("Updated Favorites:", store.getState().match.favorites); // Now should show the latest state
     const alreadyThere = favorites.includes(id);
 
     if (!alreadyThere) {
