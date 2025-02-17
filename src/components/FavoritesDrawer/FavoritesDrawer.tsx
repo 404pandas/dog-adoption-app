@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./FavoritesDrawer.css"; // Import the CSS file for the animations
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, store } from "../../store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import Match from "../Match/Match";
+import "./favoritesDrawer.css";
 
 const FavoritesDrawer = () => {
   const favorites = useSelector((state: RootState) => state.match.favorites);
@@ -38,6 +40,7 @@ const FavoritesDrawer = () => {
             </li>
           )}
         </ul>
+        <Match />
       </div>
     </div>
   );

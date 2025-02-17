@@ -158,3 +158,22 @@ export const fetchDogsByIds = async (dogIds: string[]): Promise<any[]> => {
 //   {
 //       "match": "selectedDogId"  // The matched dog's ID
 //   }
+export const matchDog = async (dogIds: string[]): Promise<string> => {
+  try {
+    if (!dogIds.length) {
+      throw new Error("No dog IDs provided for matching");
+    }
+
+    const response = await axios.post(`${API_BASE_URL}/dogs/match`, dogIds, {
+      withCredentials: true, // Ensures cookies are included in requests
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data.match; // Returns the matched dog ID
+  } catch (error) {
+    console.error("Error matching dog:", error);
+    throw new Error("Failed to match a dog");
+  }
+};
