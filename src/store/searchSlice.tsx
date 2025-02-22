@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import { FavoriteDog } from "../types/dog";
 // Define the types for the search query and results
 interface SearchQuery {
   breeds?: string[];
@@ -20,7 +20,7 @@ interface SearchState {
   } | null;
   isLoading: boolean;
   error: unknown;
-  dogs: DogResults[];
+  dogs: DogResults[] | FavoriteDog[];
 }
 
 interface DogResults {
@@ -68,7 +68,10 @@ const searchSlice = createSlice({
       state.error = action.payload;
     },
     // Set dog results
-    setDogSearchResults(state, action: PayloadAction<DogResults[]>) {
+    setDogSearchResults(
+      state,
+      action: PayloadAction<DogResults[] | FavoriteDog[]>
+    ) {
       state.dogs = action.payload;
     },
   },

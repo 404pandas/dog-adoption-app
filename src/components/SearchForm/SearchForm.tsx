@@ -13,7 +13,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material"; // For the expand/
 
 import { searchDogs, getBreeds, fetchDogsByIds } from "../../api/dogRoutes";
 import "./searchform.css";
-import { Dog } from "../../types/dog";
+import { Dog, FavoriteDog } from "../../types/dog";
 // redux
 import { store } from "../../store";
 
@@ -72,7 +72,7 @@ const SearchForm = () => {
   const fetchDogs = async (breeds: string[]) => {
     setLoading(true);
     try {
-      const dogData: Dog[] = await fetchDogsByIds(breeds);
+      const dogData: Dog[] | FavoriteDog[] = await fetchDogsByIds(breeds);
       store.dispatch(setDogSearchResults(dogData));
       console.log(dogSearchResults);
     } catch (error: unknown) {
