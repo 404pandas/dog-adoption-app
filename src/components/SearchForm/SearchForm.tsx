@@ -74,7 +74,6 @@ const SearchForm = () => {
     try {
       const dogData: Dog[] | FavoriteDog[] = await fetchDogsByIds(breeds);
       store.dispatch(setDogSearchResults(dogData));
-      console.log(dogSearchResults);
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";

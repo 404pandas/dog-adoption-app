@@ -46,7 +46,7 @@ This app interacts with the Fetch API. Authentication is required for all reques
 ```
 dog-adoption-app/
 ├── src/
-│   ├── components/        # Reusable UI components
+│   ├── components/      # Reusable UI components
 │   ├── pages/             # Login, Search, Favorites, Match pages
 │   ├── hooks/             # Custom hooks for API calls
 │   ├── context/           # Global state management
@@ -72,3 +72,12 @@ This project is open-source under the MIT License.
 ---
 
 🐾 **Built with love for dog lovers!** 🐾
+
+<!-- Correct:
+https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji&breeds=Beagle&size=25&sort=breed:asc&from=25
+
+Incorrect:
+https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji,Beagle&size=25&sort=breed:asc&from=25
+https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%2CBeagle&size=25&sort=breed:asc&from=25
+https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%26Beagle&size=25&sort=breed:asc&from=25
+https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%2CBeagle%2CBulldog&size=25&sort=breed:asc&from=25 -->

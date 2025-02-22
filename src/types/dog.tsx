@@ -13,5 +13,9 @@ export interface Match {
 
 export interface FavoriteDog {
   id: string;
+  img: string;
   name: string;
+  age: number;
+  zip_code: string;
+  breed: string;
 }

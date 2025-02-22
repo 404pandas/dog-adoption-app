@@ -2,13 +2,7 @@ import axios from "axios";
 import { FavoriteDog } from "../types/dog";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// ─── DOG BREED NAMES ─────────────────────────────
-// Endpoint: GET /dogs/breeds
-// Description: Retrieves an array of all possible dog breed names.
-
-// Response:
-// - Status: 200 OK
-// - Body: Array of breed names
+// ─── GET DOG BREEDS ────────────────────────────
 
 export const getBreeds = async (): Promise<string[]> => {
   try {
@@ -27,32 +21,7 @@ export const getBreeds = async (): Promise<string[]> => {
   }
 };
 
-// ─── DOGS BY QUERY ───────────────────────────────
-// Endpoint: GET /dogs/search
-// Description: Searches for dogs based on various query parameters.
-
-// Query Parameters (All optional):
-// - breeds (string[]) → An array of breed names to filter by
-// - zipCodes (string[]) → An array of zip codes to filter by
-// - ageMin (number) → Minimum age filter
-// - ageMax (number) → Maximum age filter
-
-// Additional Query Parameters:
-// - size (number) → Number of results to return (default: 25)
-// - from (string) → Cursor for paginating results
-// - sort (string) → Sorting format: `sort=field:[asc|desc]`
-//   - Sortable fields: breed, name, age
-//   - Example: `sort=breed:asc`
-
-// Response:
-// - Status: 200 OK
-// - Body:
-//   {
-//       "resultIds": string[],  // Array of dog IDs matching the query
-//       "total": number,        // Total number of results (max: 10,000)
-//       "next": string | null,  // Query for the next page (if available)
-//       "prev": string | null   // Query for the previous page (if available)
-//   }
+// ─── SEARCH DOGS WITH PAGINATION ───────────────
 
 export const searchDogs = async ({
   breeds,
@@ -65,22 +34,13 @@ export const searchDogs = async ({
 }: {
   breeds?: string[];
   zipCodes?: string[];
-  ageMin?: number;
-  ageMax?: number;
+  ageMin?: number | undefined;
+  ageMax?: number | undefined;
   size?: number;
-  from?: string;
-  sort?: string;
+  from?: number;
+  sort?: string | null | undefined;
 }) => {
   try {
-    // Correct:
-    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji&breeds=Beagle&size=25&sort=breed:asc&from=25
-
-    // Incorrect:
-    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji,Beagle&size=25&sort=breed:asc&from=25
-    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%2CBeagle&size=25&sort=breed:asc&from=25
-    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%26Beagle&size=25&sort=breed:asc&from=25
-    // https://frontend-take-home-service.fetch.com/dogs/search?breeds=Basenji%2CBeagle%2CBulldog&size=25&sort=breed:asc&from=25
-
     const response = await axios.get(`${API_BASE_URL}/dogs/search`, {
       params: {
         breeds: breeds,
@@ -101,24 +61,7 @@ export const searchDogs = async ({
   }
 };
 
-// ─── FETCH 100 DOG OBJECTS ───────────────────────
-// Endpoint: POST /dogs
-// Description: Fetches up to 100 dog objects by their IDs.
-
-// Body Parameters:
-// - Array of dog IDs (max: 100)
-
-// Example Request Body:
-// [
-//     "dogId1",
-//     "dogId2",
-//     "dogId3"
-// ]
-
-// Response:
-// - Status: 200 OK
-// - Body: Array of dog objects
-
+// ─── FETCH DOG DETAILS BY IDS ──────────────────
 export const fetchDogsByIds = async (
   dogIds: string[]
 ): Promise<FavoriteDog[]> => {
@@ -141,26 +84,8 @@ export const fetchDogsByIds = async (
   }
 };
 
-// ─── MATCH A DOG ────────────────────────────────
-// Endpoint: POST /dogs/match
-// Description: Selects a single dog ID from a provided list of dog IDs for adoption matching.
+// ─── MATCH A DOG ───────────────────────────────
 
-// Body Parameters:
-// - Array of dog IDs
-
-// Example Request Body:
-// [
-//     "dogId1",
-//     "dogId2",
-//     "dogId3"
-// ]
-
-// Response:
-// - Status: 200 OK
-// - Body:
-//   {
-//       "match": "selectedDogId"  // The matched dog's ID
-//   }
 export const matchDog = async (dogIds: string[]): Promise<string> => {
   try {
     if (!dogIds.length) {
