@@ -3,18 +3,17 @@ import { StrictMode } from "react";
 
 // local modules
 import "./index.css";
-import "./App.css"
+import "./App.css";
 import App from "./App.js";
 
-
 // Routing
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Pages
-import Login from './pages/Login';
-import Error from './pages/Error';
-import Search from './pages/Search';
+import Login from "./pages/Login";
+import Error from "./pages/Error";
+import Search from "./pages/Search";
 // Do I need this?
 // import Match from './pages/Match.tsx';
 
@@ -22,32 +21,30 @@ import Search from './pages/Search';
 import { Provider } from "react-redux";
 import { store } from "./store";
 
-
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <Error />,
     children: [
       {
         index: true,
-        element: <Search />,
+        element: <Login />,
       },
       {
-        path: '/login',
-        element: <Login />,
+        path: "/search",
+        element: <Search />,
       },
     ],
   },
 ]);
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <StrictMode>
-        <Provider store={store}>
-
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
       </Provider>
     </StrictMode>
   );

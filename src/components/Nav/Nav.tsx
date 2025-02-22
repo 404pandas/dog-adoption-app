@@ -20,11 +20,11 @@ const Nav = () => {
 
   const handleLogin = () => {
     // Redirect to /login route when Login button is clicked
-    navigate("/login");
+    navigate("/");
   };
 
   const handleHomeClick = () => {
-    navigate("/"); // Navigate to /search when HomeIcon button is clicked
+    navigate("/search"); // Navigate to /search when HomeIcon button is clicked
   };
 
   return (
