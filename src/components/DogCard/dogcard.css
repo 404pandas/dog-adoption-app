@@ -13,5 +13,5 @@
 }
 
 .dog:hover img {
-  max-height: unset !important;
+  max-height: 300px !important;
 }

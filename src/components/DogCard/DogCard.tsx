@@ -29,6 +29,7 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
 
   const favorites = useSelector((state: RootState) => state.match.favorites);
   const isFavorite = favorites.some((fav) => fav.id === dog.id);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleFavoriteClick = () => {
     if (!isFavorite) {
@@ -42,18 +43,27 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
     <Card
       className='max-w-sm rounded-lg shadow-md m-4 dog'
       sx={{ position: "relative" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <CardMedia component='img' height='300' image={dog.img} alt={dog.name} />
       <CardContent>
         <Typography variant='h6' className='font-bold'>
           {dog.name}
         </Typography>
-        <Typography variant='body2' color='textSecondary'>
-          Breed: {dog.breed}
-        </Typography>
-        <Typography variant='body2' color='textSecondary'>
-          Age: {dog.age} years
-        </Typography>
+        {isHovered && (
+          <>
+            <Typography variant='body2' color='textSecondary'>
+              Breed: {dog.breed}
+            </Typography>
+            <Typography variant='body2' color='textSecondary'>
+              Age: {dog.age} years
+            </Typography>
+            <Typography variant='body2' color='textSecondary'>
+              Zip Code: {dog.zip_code}
+            </Typography>
+          </>
+        )}
       </CardContent>
       <IconButton
         onClick={handleFavoriteClick}
