@@ -62,13 +62,13 @@ const Login = () => {
   return (
     <Container
       maxWidth='sm'
-      className='flex flex-col items-center justify-center min-h-screen body'
+      className='flex flex-col items-center justify-center min-h-screen body '
     >
       <Box className='p-8 shadow-lg rounded-lg w-full container'>
         <Typography variant='h4' className=' text-center mb-6'>
           Login
         </Typography>
-        <form onSubmit={handleLogin} className='space-y-6'>
+        <form onSubmit={handleLogin} className='space-y-6 '>
           {/* Name Field */}
           <FormControl fullWidth>
             <TextField
@@ -80,7 +80,7 @@ const Login = () => {
               className=' rounded-md'
               InputProps={{
                 className:
-                  "hover:shadow-lg focus:shadow-lg transition-shadow duration-300",
+                  "hover:shadow-lg focus:shadow-lg transition-shadow duration-300 form-input",
               }}
             />
           </FormControl>
@@ -97,7 +97,7 @@ const Login = () => {
               className=' rounded-md'
               InputProps={{
                 className:
-                  "hover:shadow-lg focus:shadow-lg transition-shadow duration-300",
+                  "hover:shadow-lg focus:shadow-lg transition-shadow duration-300 form-input",
               }}
             />
           </FormControl>

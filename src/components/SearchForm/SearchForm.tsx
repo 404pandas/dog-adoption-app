@@ -171,11 +171,14 @@ const SearchForm = () => {
             <Select
               labelId='breeds-label'
               id='breeds'
+              label='Select Breed(s)'
               name='breeds'
               multiple
               value={formValues.breeds}
               onChange={handleChange}
-              renderValue={(selected) => selected.join(", ")}
+              renderValue={(selected) =>
+                selected.length > 0 ? selected.join(", ") : "Select Breed(s)"
+              }
             >
               {loading ? (
                 <MenuItem disabled>Loading breeds...</MenuItem>

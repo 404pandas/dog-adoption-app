@@ -39,7 +39,7 @@ const Nav = () => {
         <Button variant='contained' color='primary' onClick={handleHomeClick}>
           <HomeIcon />
         </Button>
-        <h1>Dog Adoption App</h1>
+        <h1 className='header-title'>Dog Adopt</h1>
       </div>
       <Button
         onClick={reduxCredentials ? handleLogout : handleLogin} // Conditional function for click
