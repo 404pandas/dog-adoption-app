@@ -73,7 +73,7 @@ const Search = () => {
       <FavoritesDrawer />
       <SearchForm />
       <ErrorMessage />
-      <h2>Results</h2>
+      <h2 className='results'>Results</h2>
       {isLoading && <p>Loading dogs...</p>}
 
       {/* MUI Table Pagination */}

@@ -25,7 +25,7 @@ import {
   setDogSearchResults,
   setError,
 } from "../../store/searchSlice"; // Assuming you have a redux slice for search results
-
+import "./searchform.css";
 const SearchForm = () => {
   const dispatch = useDispatch();
   const searchQuery = useSelector((state: RootState) => state.search.query); // Get search query from Redux
@@ -156,8 +156,8 @@ const SearchForm = () => {
   };
 
   return (
-    <div className='max-w-4xl mx-auto p-6 test'>
-      <h1 className='text-2xl mb-4'>Search Dogs</h1>
+    <div className='max-w-4xl mx-auto p-6 fetch-green'>
+      <h2 className='text-2xl mb-4'>Search Dogs</h2>
       <div className='flex justify-end'>
         <IconButton onClick={toggleFormMinimization}>
           {isFormMinimized ? <ExpandMore /> : <ExpandLess />}
@@ -284,12 +284,7 @@ const SearchForm = () => {
           </div>
 
           <div className='flex justify-center'>
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              className='w-full'
-            >
+            <Button type='submit' variant='contained' className='w-full'>
               Search
             </Button>
           </div>

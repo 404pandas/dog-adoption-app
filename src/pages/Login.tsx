@@ -16,19 +16,36 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [error, setLocalError] = useState(""); // Local state for validation errors
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate email format
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Please enter a valid email address.");
+    // Reset previous errors
+    setLocalError("");
+    store.dispatch(setError(""));
+
+    // ✅ Validate name
+    if (!name.trim()) {
+      setLocalError("Please enter a name!");
       return;
     }
 
-    setError("");
+    // ✅ Validate email
+    if (!email.trim()) {
+      setLocalError("Please enter an email!");
+      return;
+    }
+
+    // ✅ Validate email format
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setLocalError("Please enter a valid email address.");
+      return;
+    }
+
     try {
+      setLoading(true);
       const message = await login(name, email); // Call API
       setStatusMessage(message);
       navigate("/search");
@@ -36,6 +53,7 @@ const Login = () => {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";
       store.dispatch(setError(errorMessage)); // Dispatching the error message as string
+      setLocalError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -46,8 +64,8 @@ const Login = () => {
       maxWidth='sm'
       className='flex flex-col items-center justify-center min-h-screen body'
     >
-      <Box className='p-8 bg-gray-900 shadow-lg rounded-lg w-full'>
-        <Typography variant='h4' className='text-white text-center mb-6'>
+      <Box className='p-8 shadow-lg rounded-lg w-full container'>
+        <Typography variant='h4' className=' text-center mb-6'>
           Login
         </Typography>
         <form onSubmit={handleLogin} className='space-y-6'>
@@ -59,7 +77,7 @@ const Login = () => {
               fullWidth
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className='bg-gray-800 text-white rounded-md'
+              className=' rounded-md'
               InputProps={{
                 className:
                   "hover:shadow-lg focus:shadow-lg transition-shadow duration-300",
@@ -76,7 +94,7 @@ const Login = () => {
               type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className='bg-gray-800 text-white rounded-md'
+              className=' rounded-md'
               InputProps={{
                 className:
                   "hover:shadow-lg focus:shadow-lg transition-shadow duration-300",
@@ -84,10 +102,18 @@ const Login = () => {
             />
           </FormControl>
 
+          {/* Error Message */}
+          {error && (
+            <Typography color='error' className='text-center'>
+              {error}
+            </Typography>
+          )}
+
           {/* Status Message */}
           {statusMessage && (
             <Typography
               color={statusMessage.includes("Successful") ? "primary" : "error"}
+              className='text-center'
             >
               {statusMessage}
             </Typography>
@@ -98,7 +124,7 @@ const Login = () => {
             type='submit'
             variant='contained'
             fullWidth
-            className='bg-blue-500 hover:bg-blue-700 text-white py-2 rounded-md transition-all duration-300'
+            className='py-2 rounded-md transition-all duration-300'
           >
             Login
           </Button>

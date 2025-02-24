@@ -2,6 +2,8 @@
 // import axios from "axios";
 import { Outlet } from "react-router-dom";
 import Nav from "./components/Nav/Nav";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme"; // Import the theme you just created
 
 function App() {
   // const [results, setResults] = useState("");
@@ -22,9 +24,11 @@ function App() {
 
   return (
     <>
-      <Nav />
+      <ThemeProvider theme={theme}>
+        <Nav />
 
-      <Outlet />
+        <Outlet />
+      </ThemeProvider>
     </>
   );
 }

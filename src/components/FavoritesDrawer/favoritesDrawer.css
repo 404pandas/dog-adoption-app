@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 4rem;
   left: 1rem;
+  z-index: 6 !important;
 }
 
 .favorite-button {
@@ -11,11 +12,7 @@
   border-radius: 9999px; /* Circle button */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease-in-out;
-  z-index: 1000;
-}
-
-.favorite-button:hover {
-  background-color: #2563eb; /* Darker blue on hover */
+  z-index: 6 !important;
 }
 
 .favorites-drawer {
@@ -33,7 +30,7 @@
   visibility: hidden; /* Hidden by default */
   transition: transform 0.3s ease-out, opacity 0.3s ease-out,
     visibility 0.3s ease-out;
-  z-index: -3 !important;
+  z-index: 4 !important;
 }
 
 .favorites-drawer.slide-up {

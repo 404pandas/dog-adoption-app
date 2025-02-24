@@ -39,7 +39,12 @@
 .read-the-docs {
   color: #888;
 }
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
 
-.test {
-  background-color: cyan !important;
+.results {
+  margin-top: 1rem;
 }

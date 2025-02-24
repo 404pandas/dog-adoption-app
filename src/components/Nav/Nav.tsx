@@ -19,6 +19,7 @@ const Nav = () => {
     // Call the logout function from the modularized API
     const message = await logout();
     dispatch(setReduxCredentials(false));
+    navigate("/");
     console.log(message);
   };
 

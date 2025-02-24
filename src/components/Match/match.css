@@ -1,3 +1,5 @@
 .match-results {
-  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
 }
