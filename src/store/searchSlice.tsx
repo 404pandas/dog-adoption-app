@@ -64,7 +64,7 @@ const searchSlice = createSlice({
       state.isLoading = action.payload;
     },
     // Set error message
-    setError(state, action: PayloadAction<string>) {
+    setError(state, action: PayloadAction<string | null>) {
       state.error = action.payload;
     },
     // Set dog results

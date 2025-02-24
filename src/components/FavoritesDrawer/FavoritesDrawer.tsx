@@ -16,7 +16,7 @@ const FavoritesDrawer = () => {
     >
       {/* Favorite button */}
       <button
-        className='favorite-button'
+        className='favorite-button btn'
         onMouseEnter={() => setIsHovered(true)}
       >
         Favorites

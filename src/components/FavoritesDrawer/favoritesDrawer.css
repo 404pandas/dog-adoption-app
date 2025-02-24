@@ -5,7 +5,7 @@
 }
 
 .favorite-button {
-  background-color: #3b82f6; /* Blue background */
+  background-color: rgb(48, 13, 56);
   color: white;
   padding: 1rem;
   border-radius: 9999px; /* Circle button */

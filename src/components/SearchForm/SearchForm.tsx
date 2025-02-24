@@ -211,25 +211,23 @@ const SearchForm = () => {
 
             {/* Display added zip codes */}
             <div className='mt-4'>
-              {formValues.zipCodes.length > 0 ? (
-                formValues.zipCodes.map((zip) => (
-                  <div
-                    key={zip}
-                    className='flex justify-between items-center mt-2 border p-2 rounded'
-                  >
-                    <span>{zip}</span>
-                    <Button
-                      variant='outlined'
-                      color='error'
-                      onClick={() => handleRemoveZipCode(zip)}
+              {formValues.zipCodes.length > 0
+                ? formValues.zipCodes.map((zip) => (
+                    <div
+                      key={zip}
+                      className='flex justify-between items-center mt-2 border p-2 rounded'
                     >
-                      Remove
-                    </Button>
-                  </div>
-                ))
-              ) : (
-                <p>No zip codes added yet.</p>
-              )}
+                      <span>{zip}</span>
+                      <Button
+                        variant='outlined'
+                        color='error'
+                        onClick={() => handleRemoveZipCode(zip)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  ))
+                : null}
             </div>
           </div>
 

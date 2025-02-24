@@ -1,18 +1,57 @@
 @import "tailwindcss";
 
+/* fetch serif import */
+@font-face {
+  font-family: "Fetch-Serif";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://prod-static-content.fetchrewards.com/content-service/We_Go_Serif_Regular_0a12a6a19c.woff2)
+    format("woff2");
+}
+
+/* fetch sans import */
+@font-face {
+  font-family: "Fetch-Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://prod-static-content.fetchrewards.com/content-service/We_Go_Sans_Regular_3e4e56d489.woff)
+    format("woff");
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* ------ COLORS ------  */
+  /* primary */
+  --fetch-color-primary: #300d38;
+  /* mostly buttons + text */
+  --fetch-deep-purple: rgb(48 13 56);
+  /* mostly headers */
+  --fetch-vibrant-purple: rgb(125 31 112);
+  /* background */
+  --bg-fetch-off-white: rgb(249 247 242);
+  /* ------ FONTS ------  */
+  /* font family for headers */
+  --fetch-serif: "Fetch-Serif", serif;
+  /* font family for text */
+  --fetch-sans: "Fetch-Sans", sans-serif;
+  /* globals */
+  font-family: var(--fetch-sans);
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color: var(--fetch-dark-purple) !important;
+  background-color: var(--bg-fetch-off-white) !important;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.fetch-gradient {
+  background: linear-gradient(
+    to right,
+    var(--fetch-footer-purple),
+    var(--fetch-dark-purple)
+  );
 }
 
 a {

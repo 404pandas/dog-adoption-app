@@ -10,11 +10,14 @@ import {
 import { login } from "../api/authRoutes"; // Adjust import path as needed
 import { store } from "../store";
 import { setLoading, setError } from "../store/searchSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const navigate = useNavigate();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -28,6 +31,7 @@ const Login = () => {
     try {
       const message = await login(name, email); // Call API
       setStatusMessage(message);
+      navigate("/search");
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";
@@ -40,7 +44,7 @@ const Login = () => {
   return (
     <Container
       maxWidth='sm'
-      className='flex flex-col items-center justify-center min-h-screen test'
+      className='flex flex-col items-center justify-center min-h-screen body'
     >
       <Box className='p-8 bg-gray-900 shadow-lg rounded-lg w-full'>
         <Typography variant='h4' className='text-white text-center mb-6'>

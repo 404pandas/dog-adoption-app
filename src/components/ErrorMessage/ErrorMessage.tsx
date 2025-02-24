@@ -9,11 +9,7 @@ const ErrorMessage = () => {
       {error ? (
         <div className='error-message'>
           {/* Render the error message here */}
-          <p>{`Error: ${
-            error instanceof Error
-              ? error.message
-              : "Something went wrong. Please contact the administrator."
-          }`}</p>
+          <p>{`Error: ${error}. Please login!`}</p>
         </div>
       ) : null}
     </div>

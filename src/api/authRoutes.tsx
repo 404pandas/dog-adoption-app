@@ -4,6 +4,7 @@ import axios from "axios";
 // local modules
 import { store } from "../store";
 import { setReduxCredentials } from "../store/authSlice";
+import { setError } from "../store/searchSlice";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -40,11 +41,11 @@ export const login = async (name: string, email: string): Promise<string> => {
       { withCredentials: true }
     );
     store.dispatch(setReduxCredentials(true));
-
+    store.dispatch(setError(null));
     return `Login Successful! Welcome, ${name}!`;
   } catch (error) {
     console.error("Login failed", error);
-    return "Login Failed. Please contact us!";
+    return `Login Failed. Please contact us: ` + error;
   }
 };
 

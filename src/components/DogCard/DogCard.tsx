@@ -11,6 +11,7 @@ import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { addFavorite, removeFavorite } from "../../store/matchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import "./dogcard.css";
 
 type DogCardProps = {
   dog: {
@@ -39,10 +40,10 @@ const DogCard: React.FC<DogCardProps> = ({ dog }) => {
 
   return (
     <Card
-      className='max-w-sm rounded-lg shadow-md m-4'
+      className='max-w-sm rounded-lg shadow-md m-4 dog'
       sx={{ position: "relative" }}
     >
-      <CardMedia component='img' height='200' image={dog.img} alt={dog.name} />
+      <CardMedia component='img' height='300' image={dog.img} alt={dog.name} />
       <CardContent>
         <Typography variant='h6' className='font-bold'>
           {dog.name}
