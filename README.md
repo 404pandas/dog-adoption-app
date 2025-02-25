@@ -63,7 +63,9 @@ dog-adoption-app/
 
 ## 🌍 Deployment
 
-This app will be deployed using **Netlify** for easy access.
+To ensure app availability, it has been hosted at two locations:
+Render-
+Netlify
 
 ## 💜 License
 

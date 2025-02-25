@@ -60,11 +60,8 @@ const Login = () => {
   };
 
   return (
-    <Container
-      maxWidth='sm'
-      className='flex flex-col items-center justify-center min-h-screen body '
-    >
-      <Box className='p-8 shadow-lg rounded-lg w-full container'>
+    <div className='flex flex-col items-center justify-center min-h-screen body'>
+      <Box className='p-8 shadow-lg rounded-lg w-3/4 container'>
         <Typography variant='h4' className=' text-center mb-6'>
           Login
         </Typography>
@@ -130,7 +127,7 @@ const Login = () => {
           </Button>
         </form>
       </Box>
-    </Container>
+    </div>
   );
 };
 
