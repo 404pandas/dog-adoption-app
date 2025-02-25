@@ -1,5 +1,11 @@
 # Dog Adoption App 🐶
 
+<div align="center">
+  <a href="https://github.com/404pandas/PARSR">
+    <img src="./src/assets/breed-hunter-logo.png" alt="Logo" width="80" height="80">
+  </a>
+</div>
+
 Welcome to the Dog Adoption App! This React + TypeScript project allows users to search for adoptable dogs, filter by breed, mark favorites, and find their perfect match.
 
 ## 🚀 Features
