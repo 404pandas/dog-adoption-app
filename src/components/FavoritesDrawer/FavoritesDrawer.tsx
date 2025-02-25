@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./FavoritesDrawer.css"; // Import the CSS file for the animations
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import Match from "../Match/Match";
