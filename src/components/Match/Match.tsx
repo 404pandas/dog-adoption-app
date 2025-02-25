@@ -1,6 +1,7 @@
 // external modules
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import Button from "@mui/material/Button";
 
 // local modules
 import "./match.css";
@@ -59,12 +60,13 @@ const Match = () => {
   };
   return (
     <div>
-      <button
+      <Button
+        variant='outlined'
         className='match-button'
         onClick={() => handleMatchClick(favorites)}
       >
         Match me!
-      </button>
+      </Button>
       {isMatching ? (
         <h3 className='match-results'>
           Comparing the following match: {displayMatch}...
