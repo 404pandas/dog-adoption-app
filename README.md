@@ -64,8 +64,9 @@ dog-adoption-app/
 ## 🌍 Deployment
 
 To ensure app availability, it has been hosted at two locations:
-Render-
-Netlify
+
+- **Render:** [Dog Adoption App on Render](https://dog-adoption-app-pztt.onrender.com/)
+- **Netlify:** [Dog Adoption App on Netlify](https://dog-adoption-app-fetch.netlify.app/)
 
 ## 💜 License
 
