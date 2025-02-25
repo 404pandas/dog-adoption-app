@@ -1,15 +1,16 @@
-// DogCard.tsx
+// external modules
 import React, { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  IconButton,
-} from "@mui/material";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import { addFavorite, removeFavorite } from "../../store/matchSlice";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Favorite from "@mui/icons-material/Favorite";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
+
+// local modules
+import { addFavorite, removeFavorite } from "../../store/matchSlice";
 import { RootState } from "../../store";
 import "./dogcard.css";
 
@@ -25,17 +26,19 @@ type DogCardProps = {
 };
 
 const DogCard: React.FC<DogCardProps> = ({ dog }) => {
+  // state
   const dispatch = useDispatch();
-
   const favorites = useSelector((state: RootState) => state.match.favorites);
-  const isFavorite = favorites.some((fav) => fav.id === dog.id);
   const [isHovered, setIsHovered] = useState(false);
+
+  // logic
+  const isFavorite = favorites.some((fav) => fav.id === dog.id);
 
   const handleFavoriteClick = () => {
     if (!isFavorite) {
-      dispatch(addFavorite({ id: dog.id, name: dog.name })); // Dispatch object
+      dispatch(addFavorite({ id: dog.id, name: dog.name }));
     } else {
-      dispatch(removeFavorite(dog.id)); // Only need id to remove
+      dispatch(removeFavorite(dog.id));
     }
   };
 

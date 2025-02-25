@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom";
 
 const Error = () => {
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
   const handleHomeClick = () => {
-    navigate("/search"); // Navigate to /search when HomeIcon button is clicked
+    navigate("/search");
   };
 
   return (

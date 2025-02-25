@@ -1,14 +1,17 @@
+// external modules
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./authSlice";
-import searchReducer from "./searchSlice";
-import matchReducer from "./matchSlice";
-import storage from "redux-persist/lib/storage"; // Local storage
+import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "redux";
 
+// local modules
+import authReducer from "./authSlice";
+import searchReducer from "./searchSlice";
+import matchReducer from "./matchSlice";
+
 const persistConfig = {
   key: "root",
-  storage, // Use local storage
+  storage,
 };
 
 const rootReducer = combineReducers({
@@ -20,7 +23,7 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer, // Use the persisted root reducer
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

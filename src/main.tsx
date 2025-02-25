@@ -14,8 +14,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
 import Search from "./pages/Search";
-// Do I need this?
-// import Match from './pages/Match.tsx';
 
 // redux
 import { Provider } from "react-redux";

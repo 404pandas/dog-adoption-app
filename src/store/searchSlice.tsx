@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FavoriteDog } from "../types/dog";
-// Define the types for the search query and results
+
 interface SearchQuery {
   breeds?: string[];
   zipCodes?: string[];
@@ -51,7 +51,7 @@ const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    // Set search query (this will be used when the search form is submitted)
+    // Set search query
     setSearchQuery(state, action: PayloadAction<SearchQuery>) {
       state.query = action.payload;
     },

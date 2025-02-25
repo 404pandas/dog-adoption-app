@@ -12,7 +12,7 @@ interface MatchState {
 
 const initialState: MatchState = {
   favorites: [],
-  match: "", // Default to true for login/logout requests
+  match: "",
 };
 
 const matchSlice = createSlice({
@@ -26,7 +26,7 @@ const matchSlice = createSlice({
     // Add dog to favorites
     addFavorite: (state, action: PayloadAction<FavoriteDog>) => {
       if (!state.favorites.some((fav) => fav.id === action.payload.id)) {
-        state.favorites.push(action.payload); // Immutable update not needed due to immer
+        state.favorites.push(action.payload);
       }
     },
     // Remove dog from favorites

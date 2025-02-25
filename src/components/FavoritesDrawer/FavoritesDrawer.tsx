@@ -1,10 +1,14 @@
+// external modules
 import { useState } from "react";
 import { useSelector } from "react-redux";
+
+// local modules
 import { RootState } from "../../store";
 import Match from "../Match/Match";
 import "./favoritesDrawer.css";
 
 const FavoritesDrawer = () => {
+  // state
   const favorites = useSelector((state: RootState) => state.match.favorites);
   const [isHovered, setIsHovered] = useState(false);
 

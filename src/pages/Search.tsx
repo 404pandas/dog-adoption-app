@@ -1,11 +1,14 @@
+// external modules
 import React, { useState, useEffect } from "react";
+import TablePagination from "@mui/material/TablePagination";
+import { useDispatch, useSelector } from "react-redux";
+
+// local modules
 import SearchForm from "../components/SearchForm/SearchForm";
 import DogCard from "../components/DogCard/DogCard";
 import { Dog } from "../types/dog";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 import FavoritesDrawer from "../components/FavoritesDrawer/FavoritesDrawer";
-import TablePagination from "@mui/material/TablePagination";
-import { useDispatch, useSelector } from "react-redux";
 import {
   setDogSearchResults,
   setError,
@@ -16,16 +19,16 @@ import { fetchDogsByIds, searchDogs } from "../api/dogRoutes";
 import { RootState } from "../store";
 
 const Search = () => {
+  // state
   const dispatch = useDispatch();
   const { query, results, isLoading, dogs } = useSelector(
     (state: RootState) => state.search
   );
-
-  // Pagination State
   const defaultRowsPerPage = query.size || 10;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(defaultRowsPerPage);
 
+  // logic
   useEffect(() => {
     const fetchDogs = async () => {
       dispatch(setLoading(true));
@@ -34,9 +37,9 @@ const Search = () => {
           ...query,
           size: rowsPerPage,
           from: page * rowsPerPage,
-          ageMin: query.ageMin ?? undefined, // Convert null to undefined
-          ageMax: query.ageMax ?? undefined, // Convert null to undefined
-          sort: query.sort ?? undefined, // Convert null to undefined
+          ageMin: query.ageMin ?? undefined,
+          ageMax: query.ageMax ?? undefined,
+          sort: query.sort ?? undefined,
         });
 
         dispatch(setSearchResults(searchResults));
@@ -65,7 +68,7 @@ const Search = () => {
   ) => {
     const newRowsPerPage = parseInt(event.target.value, 10);
     setRowsPerPage(newRowsPerPage);
-    setPage(0); // Reset to first page
+    setPage(0);
   };
 
   return (
@@ -79,7 +82,7 @@ const Search = () => {
       {/* MUI Table Pagination */}
       <TablePagination
         component='div'
-        count={results?.total || 0} // Ensure total count is defined
+        count={results?.total || 0}
         page={page}
         onPageChange={handlePageChange}
         rowsPerPage={rowsPerPage}

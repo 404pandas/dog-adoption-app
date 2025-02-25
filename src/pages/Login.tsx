@@ -1,44 +1,43 @@
+// external modules
 import React, { useState } from "react";
-import {
-  Container,
-  Box,
-  Typography,
-  TextField,
-  Button,
-  FormControl,
-} from "@mui/material";
-import { login } from "../api/authRoutes"; // Adjust import path as needed
-import { store } from "../store";
-import { setLoading, setError } from "../store/searchSlice";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
 import { useNavigate } from "react-router-dom";
 
+// local modules
+import { login } from "../api/authRoutes";
+import { store } from "../store";
+import { setLoading, setError } from "../store/searchSlice";
+
 const Login = () => {
+  // state
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-  const [error, setLocalError] = useState(""); // Local state for validation errors
+  const [error, setLocalError] = useState("");
   const navigate = useNavigate();
 
+  // logic
+  // login handler
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Reset previous errors
     setLocalError("");
     store.dispatch(setError(""));
 
-    // ✅ Validate name
     if (!name.trim()) {
       setLocalError("Please enter a name!");
       return;
     }
 
-    // ✅ Validate email
     if (!email.trim()) {
       setLocalError("Please enter an email!");
       return;
     }
 
-    // ✅ Validate email format
     if (!/\S+@\S+\.\S+/.test(email)) {
       setLocalError("Please enter a valid email address.");
       return;
@@ -46,13 +45,13 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const message = await login(name, email); // Call API
+      const message = await login(name, email);
       setStatusMessage(message);
       navigate("/search");
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";
-      store.dispatch(setError(errorMessage)); // Dispatching the error message as string
+      store.dispatch(setError(errorMessage));
       setLocalError(errorMessage);
     } finally {
       setLoading(false);

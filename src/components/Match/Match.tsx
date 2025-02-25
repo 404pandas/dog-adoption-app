@@ -1,44 +1,45 @@
+// external modules
 import { useSelector, useDispatch } from "react-redux";
-import { matchDog, fetchDogsByIds } from "../../api/dogRoutes"; // Add getDogById API call
+import { useState } from "react";
+
+// local modules
+import "./match.css";
+import type { FavoriteDog } from "../../types/dog";
+import { matchDog, fetchDogsByIds } from "../../api/dogRoutes";
 import { setMatch } from "../../store/matchSlice";
 import { RootState } from "../../store";
 
-import "./match.css";
-import { useState } from "react";
-import type { FavoriteDog } from "../../types/dog";
-
 const Match = () => {
+  // state
   const dispatch = useDispatch();
   const favorites = useSelector((state: RootState) => state.match.favorites);
   const match = useSelector((state: RootState) => state.match.match);
-
   const [displayMatch, setDisplayMatch] = useState<string | null>(null);
   const [isMatching, setIsMatching] = useState(false);
 
+  // logic
   const handleMatchClick = async (
     favoriteDogs: { id: string; name: string }[]
   ) => {
     if (!favoriteDogs.length) return;
 
-    setIsMatching(true); // Start animation effect
+    setIsMatching(true);
     let index = 0;
 
-    const ids = favoriteDogs.map((dog) => dog.id); // Extract IDs for API request
+    const ids = favoriteDogs.map((dog) => dog.id);
 
-    // Start cycling effect
     const cycleInterval = setInterval(() => {
       setDisplayMatch(favoriteDogs[index]?.name || "Finding...");
       index = (index + 1) % favoriteDogs.length;
     }, 100);
 
     try {
-      const matchedId = await matchDog(ids); // Get matched dog ID
-      const matchedDogs: FavoriteDog[] = await fetchDogsByIds([matchedId]); // Fetch the dog's details
+      const matchedId = await matchDog(ids);
+      const matchedDogs: FavoriteDog[] = await fetchDogsByIds([matchedId]);
 
       if (matchedDogs.length > 0) {
-        dispatch(setMatch(matchedDogs[0].name)); // Store dog's name in Redux
+        dispatch(setMatch(matchedDogs[0].name));
 
-        // Stop the cycling effect and show the real match
         clearInterval(cycleInterval);
         setTimeout(() => {
           setIsMatching(false);

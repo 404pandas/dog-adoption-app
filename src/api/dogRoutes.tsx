@@ -1,5 +1,9 @@
+// external modules
 import axios from "axios";
+
+// local modules
 import { FavoriteDog } from "../types/dog";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // ─── GET DOG BREEDS ────────────────────────────
@@ -9,11 +13,10 @@ export const getBreeds = async (): Promise<string[]> => {
     const response = await axios.get(
       "https://frontend-take-home-service.fetch.com/dogs/breeds",
       {
-        withCredentials: true, // Ensures cookies are included in requests
+        withCredentials: true,
       }
     );
 
-    // Return the list of breeds
     return response.data;
   } catch (error) {
     console.error("Error fetching dog breeds:", error);
@@ -54,7 +57,7 @@ export const searchDogs = async ({
 
       withCredentials: true,
     });
-    return response.data; // Return the list of dogs from the response
+    return response.data;
   } catch (error) {
     console.error("Error fetching dogs:", error);
     throw error;
@@ -62,6 +65,7 @@ export const searchDogs = async ({
 };
 
 // ─── FETCH DOG DETAILS BY IDS ──────────────────
+
 export const fetchDogsByIds = async (
   dogIds: string[]
 ): Promise<FavoriteDog[]> => {
@@ -71,13 +75,13 @@ export const fetchDogsByIds = async (
     }
 
     const response = await axios.post(`${API_BASE_URL}/dogs`, dogIds, {
-      withCredentials: true, // Ensures cookies are included in requests
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    return response.data; // Returns the array of dog objects
+    return response.data;
   } catch (error) {
     console.error("Error fetching dogs by IDs:", error);
     throw new Error("Failed to fetch dog details");
@@ -93,13 +97,13 @@ export const matchDog = async (dogIds: string[]): Promise<string> => {
     }
 
     const response = await axios.post(`${API_BASE_URL}/dogs/match`, dogIds, {
-      withCredentials: true, // Ensures cookies are included in requests
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    return response.data.match; // Returns the matched dog ID
+    return response.data.match;
   } catch (error) {
     console.error("Error matching dog:", error);
     throw new Error("Failed to match a dog");

@@ -1,35 +1,33 @@
+// external modules
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  TextField,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
-  SelectChangeEvent,
-  IconButton,
-} from "@mui/material";
-import { ExpandLess, ExpandMore } from "@mui/icons-material"; // For the expand/collapse icon
-
-import { searchDogs, getBreeds, fetchDogsByIds } from "../../api/dogRoutes";
-import "./searchform.css";
-import { Dog, FavoriteDog } from "../../types/dog";
-// redux
-import { store } from "../../store";
-
-import { RootState } from "../../store"; // Import RootState type
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import IconButton from "@mui/material/IconButton";
+import { SelectChangeEvent } from "@mui/material/Select";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useDispatch, useSelector } from "react-redux";
+
+// local modules
 import {
   setSearchQuery,
   setSearchResults,
   setDogSearchResults,
   setError,
-} from "../../store/searchSlice"; // Assuming you have a redux slice for search results
+} from "../../store/searchSlice";
 import "./searchform.css";
+import { store, RootState } from "../../store";
+import { searchDogs, getBreeds, fetchDogsByIds } from "../../api/dogRoutes";
+import { Dog, FavoriteDog } from "../../types/dog";
+
 const SearchForm = () => {
+  // state
   const dispatch = useDispatch();
-  const searchQuery = useSelector((state: RootState) => state.search.query); // Get search query from Redux
-  // Local state for form values
+  const searchQuery = useSelector((state: RootState) => state.search.query);
   const [formValues, setFormValues] = useState({
     breeds: searchQuery.breeds || [],
     zipCodes: searchQuery.zipCodes || [],
@@ -39,28 +37,27 @@ const SearchForm = () => {
     sort: searchQuery.sort,
     from: undefined,
   });
-
-  // State for dog breeds
   const [breeds, setBreeds] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [zipInput, setZipInput] = useState("");
-  const dogSearchResults = useSelector((state: RootState) => state.search.dogs); // Get dog search results from Redux
-
+  const dogSearchResults = useSelector((state: RootState) => state.search.dogs);
   const [isFormMinimized, setIsFormMinimized] = useState(
     dogSearchResults.length > 0
   );
 
-  // Fetch breeds when component mounts
+  // logic
+
+  // fetches breeds when component mounts
   useEffect(() => {
     const fetchBreeds = async () => {
       setLoading(true);
       try {
-        const breedData = await getBreeds(); // Fetch breeds from the API
-        setBreeds(breedData); // Set the breeds in the state
+        const breedData = await getBreeds();
+        setBreeds(breedData);
       } catch (error: unknown) {
         const errorMessage =
           error instanceof Error ? error.message : "An unknown error occurred";
-        store.dispatch(setError(errorMessage)); // Dispatching the error message as string
+        store.dispatch(setError(errorMessage));
       } finally {
         setLoading(false);
       }
@@ -69,6 +66,7 @@ const SearchForm = () => {
     fetchBreeds();
   }, []);
 
+  // fetches dogs by ids
   const fetchDogs = async (breeds: string[]) => {
     setLoading(true);
     try {
@@ -77,7 +75,7 @@ const SearchForm = () => {
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";
-      store.dispatch(setError(errorMessage)); // Dispatching the error message as string
+      store.dispatch(setError(errorMessage));
     } finally {
       setLoading(false);
     }
@@ -106,7 +104,7 @@ const SearchForm = () => {
         ...prev,
         zipCodes: [...prev.zipCodes, zipInput.trim()],
       }));
-      setZipInput(""); // Clear input after adding
+      setZipInput("");
     }
   };
 
@@ -129,8 +127,7 @@ const SearchForm = () => {
     dispatch(setError(""));
     dispatch(setDogSearchResults([]));
     e.preventDefault();
-    dispatch(setSearchQuery(formValues)); // Dispatch search values to Redux
-    // Make API call here based on formValues
+    dispatch(setSearchQuery(formValues));
     try {
       setLoading(true);
       const results = await searchDogs({
@@ -144,12 +141,11 @@ const SearchForm = () => {
       });
       dispatch(setSearchResults(results));
 
-      // Handle the results (e.g., update the UI or store them in Redux)
       fetchDogs(results.resultIds);
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";
-      store.dispatch(setError(errorMessage)); // Dispatching the error message as string
+      store.dispatch(setError(errorMessage));
     } finally {
       setLoading(false);
     }
@@ -286,6 +282,7 @@ const SearchForm = () => {
             </FormControl>
           </div>
 
+          {/* search button */}
           <div className='flex justify-center'>
             <Button type='submit' variant='contained' className='w-full'>
               Search
