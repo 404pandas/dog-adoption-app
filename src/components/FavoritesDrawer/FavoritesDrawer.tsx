@@ -3,7 +3,7 @@ import "./FavoritesDrawer.css"; // Import the CSS file for the animations
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import Match from "../Match/Match";
-import "./drawer.css";
+import "./favoritesDrawer.css";
 
 const FavoritesDrawer = () => {
   const favorites = useSelector((state: RootState) => state.match.favorites);
